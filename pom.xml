@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.mytests.spring</groupId>
-    <artifactId>spring-declarative-client</artifactId>
+    <artifactId>spring6-declarative-client</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>spring-declarative-client</name>
     <description>spring-declarative-client</description>

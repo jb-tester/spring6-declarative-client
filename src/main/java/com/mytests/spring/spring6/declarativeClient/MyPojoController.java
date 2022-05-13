@@ -17,7 +17,7 @@ public class MyPojoController {
     @Autowired
     private MyPojoService pojoService;
 
-    @GetMapping("/pojos/all")
+    @GetMapping("/pojos")
     public List<MyPojo> getAllPojos(){
         return pojoService.findAll();
     }

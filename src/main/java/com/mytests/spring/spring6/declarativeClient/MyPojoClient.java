@@ -20,7 +20,7 @@ public interface MyPojoClient {
     @PostExchange("/add")
     MyPojo addPojo(@RequestBody MyPojo pojo);
 
-    @GetExchange("/all")
+    @GetExchange
     List<MyPojo> getAllPojos();
 
     @GetExchange("/byProp3/{flag}")
