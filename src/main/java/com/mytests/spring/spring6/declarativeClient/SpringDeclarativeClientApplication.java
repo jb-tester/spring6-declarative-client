@@ -8,6 +8,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.support.WebClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
+
 @SpringBootApplication
 public class SpringDeclarativeClientApplication {
 
@@ -26,6 +27,37 @@ public class SpringDeclarativeClientApplication {
         return proxyFactory.createClient(MyPojoClient.class);
     }
 
+    @Bean
+    public SimplePostGetClient simpleGetClient() {
+        WebClient web_client = WebClient.builder()
+                .baseUrl("http://localhost:8080")
+                .build();
+        HttpServiceProxyFactory proxyFactory =
+                HttpServiceProxyFactory.builder(new WebClientAdapter(web_client)).build();
+
+        return proxyFactory.createClient(SimplePostGetClient.class);
+    }
+    @Bean
+    public VerySimplePostGetClient verySimpleGetClient() {
+        WebClient web_client = WebClient.builder()
+                .baseUrl("http://localhost:8080")
+                .build();
+        HttpServiceProxyFactory proxyFactory =
+                HttpServiceProxyFactory.builder(new WebClientAdapter(web_client)).build();
+
+        return proxyFactory.createClient(VerySimplePostGetClient.class);
+    }
+
+    @Bean
+    public EmptyPathClient emptyPathClient() {
+        WebClient web_client = WebClient.builder()
+                .baseUrl("http://localhost:8080")
+                .build();
+        HttpServiceProxyFactory proxyFactory =
+                HttpServiceProxyFactory.builder(new WebClientAdapter(web_client)).build();
+
+        return proxyFactory.createClient(EmptyPathClient.class);
+    }
     @Bean
     public ApplicationRunner applicationRunner(MyPojoClient client) {
         return args -> {
@@ -56,6 +88,41 @@ public class SpringDeclarativeClientApplication {
             for (MyPojo p : client.getAllPojos()) {
                 System.out.println(p);
             }
+
+        };
+    }
+
+    @Bean
+    public ApplicationRunner appRunner2(SimplePostGetClient client) {
+        return args -> {
+
+            System.out.println("simple get:");
+            System.out.println(client.foo());
+            System.out.println("simple post and get:");
+            client.postFoo("foo");
+            System.out.println(client.foo());
+        };
+    }
+    @Bean
+    public ApplicationRunner appRunner3(VerySimplePostGetClient client) {
+        return args -> {
+
+            System.out.println("very simple get:");
+            System.out.println(client.getString());
+            System.out.println("very simple post and get:");
+            client.postString("hello");
+            System.out.println(client.getString());
+        };
+    }
+    @Bean
+    public ApplicationRunner appRunner4(EmptyPathClient client) {
+        return args -> {
+
+            System.out.println(" get from '/':");
+            System.out.println(client.getFromHome());
+            System.out.println(" post and get from '/':");
+            client.postToHome("hello");
+            System.out.println(client.getFromHome());
         };
     }
 }
