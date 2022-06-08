@@ -40,8 +40,12 @@ public class SpringDeclarativeClientApplication {
             for (MyPojo p : client.getPojosByProp3(true)) {
                 System.out.println(p);
             }
-            System.out.println("------ pojosByProp1 test:");
+            System.out.println("------ pojosByProp1 test: by single request parameter 'p1'");
             for (MyPojo p : client.getPojosByProp1("bar")) {
+                System.out.println(p);
+            }
+            System.out.println("------ pojosByProp1 test: by 2 request parameters 'p2' and 'p3'");
+            for (MyPojo p : client.getPojosByProp1Alt("2","3")) {
                 System.out.println(p);
             }
             System.out.println("------ addPojo test:");

@@ -55,4 +55,12 @@ public class MyPojoService {
         }
         return rez;
     }
+
+    public List<MyPojo> getByProp1LikeOneOfParams(String p2, String p3) {
+        List<MyPojo> rez = new ArrayList<>();
+        for (MyPojo pojo : pojos) {
+            if(pojo.getProp1().contains(p2)||pojo.getProp1().contains(p3)) { rez.add(pojo);}
+        }
+        return rez;
+    }
 }

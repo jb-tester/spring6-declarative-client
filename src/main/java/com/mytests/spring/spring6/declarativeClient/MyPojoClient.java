@@ -15,7 +15,7 @@ import java.util.List;
  * <p>Project: spring-declarative-client</p>
  * *
  */
-@HttpExchange("/pojos")
+@HttpExchange(url = "/pojos")
 public interface MyPojoClient {
     @PostExchange("/add")
     MyPojo addPojo(@RequestBody MyPojo pojo);
@@ -23,12 +23,15 @@ public interface MyPojoClient {
     @GetExchange
     List<MyPojo> getAllPojos();
 
-    @GetExchange("/byProp3/{flag}")
+    @GetExchange(value = "/byProp3/{flag}")
     List<MyPojo> getPojosByProp3(@PathVariable("flag") boolean p3);
 
     @GetExchange(url = "/byId/{id}")
     MyPojo getPojoById(@PathVariable int id);
 
     @GetExchange("/byProp1")
-    List<MyPojo> getPojosByProp1(@RequestParam("p1") String prop1);
+    List<MyPojo> getPojosByProp1(@RequestParam(name = "p1", required = true) String prop1);
+
+    @GetExchange("/byProp1")
+    List<MyPojo> getPojosByProp1Alt(@RequestParam(name = "p2", required = true) String p2,@RequestParam(name = "p3", required = true) String p3 );
 }
