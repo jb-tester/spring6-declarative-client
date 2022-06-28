@@ -15,7 +15,7 @@ public class EmptyPathController {
     @GetMapping
     public String getSmth(){
 
-        return str;
+        return this.str;
     }
 
     @PostMapping

@@ -19,7 +19,7 @@ public class SpringDeclarativeClientApplication {
     @Bean
     public MyPojoClient myPojoClient() {
         WebClient web_client = WebClient.builder()
-                .baseUrl("http://localhost:8080")
+                .baseUrl("http://localhost:8081/spring6/tests")
                 .build();
         HttpServiceProxyFactory proxyFactory =
                 HttpServiceProxyFactory.builder(new WebClientAdapter(web_client)).build();
@@ -30,7 +30,7 @@ public class SpringDeclarativeClientApplication {
     @Bean
     public SimplePostGetClient simpleGetClient() {
         WebClient web_client = WebClient.builder()
-                .baseUrl("http://localhost:8080")
+                .baseUrl("http://localhost:8081/spring6/tests")
                 .build();
         HttpServiceProxyFactory proxyFactory =
                 HttpServiceProxyFactory.builder(new WebClientAdapter(web_client)).build();
@@ -40,7 +40,7 @@ public class SpringDeclarativeClientApplication {
     @Bean
     public VerySimplePostGetClient verySimpleGetClient() {
         WebClient web_client = WebClient.builder()
-                .baseUrl("http://localhost:8080")
+                .baseUrl("http://localhost:8081/spring6/tests")
                 .build();
         HttpServiceProxyFactory proxyFactory =
                 HttpServiceProxyFactory.builder(new WebClientAdapter(web_client)).build();
@@ -51,7 +51,7 @@ public class SpringDeclarativeClientApplication {
     @Bean
     public EmptyPathClient emptyPathClient() {
         WebClient web_client = WebClient.builder()
-                .baseUrl("http://localhost:8080")
+                .baseUrl("http://localhost:8081/spring6/tests")
                 .build();
         HttpServiceProxyFactory proxyFactory =
                 HttpServiceProxyFactory.builder(new WebClientAdapter(web_client)).build();

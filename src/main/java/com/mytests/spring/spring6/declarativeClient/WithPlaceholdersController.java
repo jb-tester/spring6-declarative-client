@@ -26,10 +26,16 @@ public class WithPlaceholdersController {
     }
 
 
-
+    // completion and folding - fixed
     @GetMapping("/${foo.bar}/${foo.buzz}")
     public String multiPropsMapping(){
         return "buzz-and-bar";
+    }
+
+    // completion doesn't work
+    @GetMapping("/${foo.bar}/${foo.buzz}-${foo.boo}")
+    public String multiPropsInSameSegmentMapping(){
+        return "bar-and-buzz-boo";
     }
 
 

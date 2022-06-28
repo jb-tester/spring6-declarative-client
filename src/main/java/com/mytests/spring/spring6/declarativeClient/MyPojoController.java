@@ -31,6 +31,14 @@ public class MyPojoController {
     public List<MyPojo> byProp3(@PathVariable("p3") Boolean p3) {
         return pojoService.getByProp3(p3);
     }
+    @GetMapping("/pojos/byProp3/foo")
+    public List<MyPojo> byProp3_1() {
+        return pojoService.getByProp3(true);
+    }
+    @GetMapping("/pojos/byProp3/bar")
+    public List<MyPojo> byProp3_2() {
+        return pojoService.getByProp3(false);
+    }
     @GetMapping(value= "/pojos/byProp1", params = "p1")
     public List<MyPojo> byProp1LikePassedReqParameter(@RequestParam("p1") String p1) {
         return pojoService.getByProp1Like(p1);
