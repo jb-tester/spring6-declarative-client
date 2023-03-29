@@ -23,9 +23,12 @@ public interface WithPlaceholdersClient {
     @GetExchange("/${foo.bar}/${foo.buzz}")
     String getFooBarBuzz();
 
-    @GetExchange("/${foo.boo}-{pv}")
-    String getBooPlusPathVar();
+    @GetExchange("/${foo.boo}-and-{pv}")
+    String getBooPlusPathVar(@PathVariable String pv);
 
     @GetExchange("/second/test-${foo.boo}-and-{pv}")
     public String pathVarsMapping2(@PathVariable String pv);
+
+    @GetExchange("${url.with.pathvars}")
+    public String pathVarsConsumedInPropertyUrl(@PathVariable String pv1, @PathVariable String pv2);
 }

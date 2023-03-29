@@ -1,8 +1,11 @@
 package com.mytests.spring.spring6.declarativeClient;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.EmbeddedValueResolver;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.support.WebClientAdapter;
@@ -12,17 +15,20 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 @SpringBootApplication
 public class SpringDeclarativeClientApplication {
 
+    @Autowired ConfigurableApplicationContext ctx;
+
     public static void main(String[] args) {
         SpringApplication.run(SpringDeclarativeClientApplication.class, args);
     }
 
+    // ======== Define the client beans: =========
     @Bean
     public MyPojoClient myPojoClient() {
         WebClient web_client = WebClient.builder()
                 .baseUrl("http://localhost:8081/spring6/tests")
                 .build();
         HttpServiceProxyFactory proxyFactory =
-                HttpServiceProxyFactory.builder(new WebClientAdapter(web_client)).build();
+                HttpServiceProxyFactory.builder(WebClientAdapter.forClient(web_client)).build();
 
         return proxyFactory.createClient(MyPojoClient.class);
     }
@@ -33,31 +39,53 @@ public class SpringDeclarativeClientApplication {
                 .baseUrl("http://localhost:8081/spring6/tests")
                 .build();
         HttpServiceProxyFactory proxyFactory =
-                HttpServiceProxyFactory.builder(new WebClientAdapter(web_client)).build();
+                HttpServiceProxyFactory.builder(WebClientAdapter.forClient(web_client)).build();
 
         return proxyFactory.createClient(SimplePostGetClient.class);
     }
+
     @Bean
     public VerySimplePostGetClient verySimpleGetClient() {
         WebClient web_client = WebClient.builder()
                 .baseUrl("http://localhost:8081/spring6/tests")
                 .build();
         HttpServiceProxyFactory proxyFactory =
-                HttpServiceProxyFactory.builder(new WebClientAdapter(web_client)).build();
+                HttpServiceProxyFactory.builder(WebClientAdapter.forClient(web_client)).build();
 
         return proxyFactory.createClient(VerySimplePostGetClient.class);
     }
-
     @Bean
     public EmptyPathClient emptyPathClient() {
         WebClient web_client = WebClient.builder()
                 .baseUrl("http://localhost:8081/spring6/tests")
                 .build();
         HttpServiceProxyFactory proxyFactory =
-                HttpServiceProxyFactory.builder(new WebClientAdapter(web_client)).build();
+                HttpServiceProxyFactory.builder(WebClientAdapter.forClient(web_client)).build();
 
         return proxyFactory.createClient(EmptyPathClient.class);
     }
+    // beans for the endpoints with placeholders:
+    @Bean
+    public EmbeddedValueResolver embeddedValueResolver(ConfigurableApplicationContext ctx){
+
+        return new EmbeddedValueResolver(ctx.getBeanFactory());
+    }
+
+    @Bean
+    public WithPlaceholdersClient withPlaceholdersClient() {
+        WebClient web_client = WebClient.builder()
+                .baseUrl("http://localhost:8081/spring6/tests")
+                .build();
+        HttpServiceProxyFactory proxyFactory =
+                HttpServiceProxyFactory.builder(WebClientAdapter.forClient(web_client))
+                       .embeddedValueResolver(embeddedValueResolver(ctx))
+                        .build();
+
+        return proxyFactory.createClient(WithPlaceholdersClient.class);
+    }
+
+    // ======== Run all clients: =========
+
     @Bean
     public ApplicationRunner applicationRunner(MyPojoClient client) {
         return args -> {
@@ -123,6 +151,18 @@ public class SpringDeclarativeClientApplication {
             System.out.println(" post and get from '/':");
             client.postToHome("hello");
             System.out.println(client.getFromHome());
+        };
+    }
+
+    @Bean
+    public ApplicationRunner appRunner5(WithPlaceholdersClient client) {
+        return args -> {
+            System.out.println("with placeholders test: ");
+
+            System.out.println(" get from with pp and pv:");
+            System.out.println(client.getBooPlusPathVar("ppp"));
+            System.out.println(" get from url that is pp:");
+            System.out.println(client.pathVarsConsumedInPropertyUrl("p1","p2"));
         };
     }
 }

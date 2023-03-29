@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
  * *
  */
 @RestController
+@RequestMapping("/${spring.application.name}")
 public class WithPlaceholdersController {
 
 
-    @RequestMapping("/${spring.application.name}/home")
+    @RequestMapping("/home")
     public String homeMapping() {
         return "home";
     }
@@ -51,5 +52,10 @@ public class WithPlaceholdersController {
     @GetMapping("/second/test-${foo.boo}-and-{pv}")
     public String pathVarsMapping2(@PathVariable String pv){
         return "boo + "+pv;
+    }
+
+    @GetMapping("${url.with.pathvars}")
+    public String pathVarsConsumedInPropertyUrl(@PathVariable String pv1,@PathVariable String pv2 ){
+        return "all in property test with path vars "+pv1+" and "+pv2;
     }
 }
