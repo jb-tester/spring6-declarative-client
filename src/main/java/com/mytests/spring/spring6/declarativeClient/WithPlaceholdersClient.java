@@ -1,6 +1,5 @@
 package com.mytests.spring.spring6.declarativeClient;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.HttpExchange;
@@ -27,8 +26,8 @@ public interface WithPlaceholdersClient {
     String getBooPlusPathVar(@PathVariable String pv);
 
     @GetExchange("/second/test-${foo.boo}-and-{pv}")
-    public String pathVarsMapping2(@PathVariable String pv);
+    String pathVarsMapping2(@PathVariable String pv);
 
     @GetExchange("${url.with.pathvars}")
-    public String pathVarsConsumedInPropertyUrl(@PathVariable String pv1, @PathVariable String pv2);
+    String pathVarsConsumedInPropertyUrl(@PathVariable String pv1, @PathVariable String pv2);
 }
