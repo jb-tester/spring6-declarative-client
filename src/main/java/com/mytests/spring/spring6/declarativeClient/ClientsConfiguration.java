@@ -77,7 +77,7 @@ public class ClientsConfiguration {
     @Bean
     public WithPlaceholdersClient withPlaceholdersClient() {
         WebClient web_client = WebClient.builder()
-                .baseUrl("http://localhost:8081/spring6/tests")
+               // .baseUrl("http://localhost:8081/spring6/tests")
                 .build();
         HttpServiceProxyFactory proxyFactory =
                 HttpServiceProxyFactory.builder(WebClientAdapter.forClient(web_client))

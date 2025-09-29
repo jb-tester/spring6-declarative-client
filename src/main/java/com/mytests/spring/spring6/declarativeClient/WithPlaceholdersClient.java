@@ -10,7 +10,8 @@ import org.springframework.web.service.annotation.HttpExchange;
  * <p>Project: spring-declarative-client</p>
  * *
  */
-@HttpExchange(url = "/${spring.application.name}")
+//@HttpExchange(url = "/${spring.application.name}")
+@HttpExchange(url = "${my-base-url}")
 public interface WithPlaceholdersClient {
 
     @GetExchange("/home")

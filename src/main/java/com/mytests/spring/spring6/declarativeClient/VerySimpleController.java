@@ -2,12 +2,7 @@ package com.mytests.spring.spring6.declarativeClient;
 
 import org.springframework.web.bind.annotation.*;
 
-/**
- * *
- * <p>Created by irina on 6/8/2022.</p>
- * <p>Project: spring-declarative-client</p>
- * *
- */
+
 @RestController
 public class VerySimpleController {
 

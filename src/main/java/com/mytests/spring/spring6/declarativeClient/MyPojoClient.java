@@ -17,7 +17,8 @@ import java.util.List;
  */
 @HttpExchange(url = "/pojos")
 public interface MyPojoClient {
-    @PostExchange("/add")
+
+    @PostExchange(url = "/add", contentType = "application/json")
     MyPojo addPojo(@RequestBody MyPojo pojo);
 
     @GetExchange
